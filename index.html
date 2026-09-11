@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Una sorpresa especial</title>
+  <style>
+    :root {
+      --bg-color: #f6efe9;
+      --card-bg: #fffbf7;
+      --primary: #c25959;
+      --text: #4a3e3d;
+      --accent: #d98a6c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      padding: 24px 16px;
+      text-align: center;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      position: relative; /* Necesario para ubicar el botón de música */
+    }
+
+    /* BOTÓN DE CONTROL DE MÚSICA */
+    .music-control {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--primary);
+      z-index: 10;
+    }
+
+    /* PANTALLA 1: CORAZÓN Y CARGA */
+    #interactive-screen {
+      margin: auto 0;
+    }
+
+    .name-title {
+      font-size: 1.8rem;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #776e6b;
+      margin-bottom: 30px;
+      min-height: 24px;
+    }
+
+    .heart-btn {
+      font-size: 3rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s ease;
+      display: inline-block;
+      color: var(--primary);
+    }
+
+    .heart-btn:active {
+      transform: scale(1.3);
+    }
+
+    .progress-bar-container {
+      width: 80%;
+      height: 10px;
+      background-color: #e6ded8;
+      border-radius: 10px;
+      margin: 30px auto 10px auto;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .progress-text {
+      font-size: 0.8rem;
+      color: #998e8b;
+    }
+
+    /* PANTALLA 2: CONTENIDO */
+    #main-screen {
+      display: none;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .header-text h2 {
+      font-weight: normal;
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+
+    .date-badge {
+      font-size: 0.85rem;
+      color: #887d7a;
+    }
+
+    /* POLAROID STYLES */
+    .polaroid-card {
+      background: #ffffff;
+      padding: 12px 12px 24px 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid #efe8e1;
+      border-radius: 2px;
+    }
+
+    .polaroid-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .polaroid-dots {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ccc;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: var(--primary);
+    }
+
+    /* ENVOLTORIO / CARTA */
+    .envelope-box {
+      background-color: #f2e3d5;
+      border: 1px dashed var(--accent);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .btn-open {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .letter-content {
+      display: none;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 15px;
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .final-photo {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- BOTÓN Y ETIQUETA DE AUDIO PARA LA MÚSICA -->
+    <button id="music-btn" class="music-control">🎵</button>
+    <audio id="bg-music" loop>
+      <!-- Reemplaza "musica.mp3" con la ruta o enlace de tu archivo de audio -->
+      <source src="No hay nadie más.mp3.mp3" type="audio/mpeg">
+      Tu navegador no soporta el audio.
+    </audio>
+
+    <!-- ETAPA 1: CORAZÓN INTERACTIVO -->
+    <div id="interactive-screen">
+      <h1 class="name-title">Ruth Mery Arce Flores</h1>
+      <p id="phrase" class="subtitle">Toca el corazón</p>
+      
+      <div id="heart-btn" class="heart-btn">♥</div>
+
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <p id="progress-text" class="progress-text">0%</p>
+    </div>
+
+    <!-- ETAPA 2: SORPRESA COMPLETA -->
+    <div id="main-screen">
+      <div class="header-text">
+        <h2>Hoy es el cumpleaños de mi persona favorita</h2>
+        <span class="date-badge">23 de Setiembre</span>
+      </div>
+
+      <!-- Galería Polaroid -->
+      <div class="polaroid-card">
+        <img id="polaroid-img" class="polaroid-img" src="https://i.imgur.com/5Buw0NZ.jpeg" alt="Foto juntos">
+        <div class="polaroid-dots">
+          <span class="dot active" onclick="setPhoto(0)"></span>
+          <span class="dot" onclick="setPhoto(1)"></span>
+          <span class="dot" onclick="setPhoto(2)"></span>
+        </div>
+      </div>
+
+      <!-- Sobre interactivo con la carta -->
+      <div class="envelope-box">
+        <button id="open-btn" class="btn-open">Descúbrelo</button>
+        <p style="font-size: 0.8rem; color: #776e6b;">Hay algo dentro para ti</p>
+
+        <div id="letter" class="letter-content">
+          <p>Hay personas que llegan y lo cambian todo. Pienso que ni el destino escribiendo la mejor de las historias habría creado a alguien tan especial como tú.</p>
+          <br>
+          <p>Hoy celebro tu risa, tu luz y tu forma de hacerme sentir en casa. Que la vida te siga mostrando que no hay nada más especial que TÚ.</p>
+          <br>
+          <p><i>Cada año tuyo es un capítulo nuevo, y pienso estar en todos. 🥂</i></p>
+          <br>
+          <img class="final-photo" src="https://i.imgur.com/GpnNDxO.jpeg" alt="Foto final">
+          <p style="text-align: center; margin-top: 10px; font-weight: bold;">Gracias por compartir tu vida conmigo ♥</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Control de audio
+    const bgMusic = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    let musicStarted = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.textContent = '🎵';
+      } else {
+        bgMusic.pause();
+        musicBtn.textContent = '🔇';
+      }
+    });
+
+    // Configuración del botón interactivo
+    const phrases = [
+      "Toca el corazón",
+      "Otra vez",
+      "Algo se está encendiendo...",
+      "Sigue, que esto se calienta",
+      "Un poquito más",
+      "No pares ahora"
+    ];
+
+    let step = 0;
+    const totalSteps = phrases.length - 1;
+
+    const heartBtn = document.getElementById('heart-btn');
+    const phraseText = document.getElementById('phrase');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const interactiveScreen = document.getElementById('interactive-screen');
+    const mainScreen = document.getElementById('main-screen');
+
+    heartBtn.addEventListener('click', () => {
+      // Inicia la música automáticamente en el primer clic
+      if (!musicStarted) {
+        bgMusic.play().catch(e => console.log("Audio pausado por el navegador:", e));
+        musicStarted = true;
+      }
+
+      if (step < totalSteps) {
+        step++;
+        phraseText.textContent = phrases[step];
+        const percentage = Math.round((step / totalSteps) * 100);
+        progressBar.style.width = percentage + '%';
+        progressText.textContent = percentage + '%';
+        
+        if (percentage === 100) {
+          setTimeout(() => {
+            interactiveScreen.style.display = 'none';
+            mainScreen.style.display = 'flex';
+          }, 400);
+        }
+      }
+    });
+
+    // Configuración de Fotos Polaroid
+    const photos = [
+      "https://i.imgur.com/5Buw0NZ.jpeg", // Foto 1
+      "https://i.imgur.com/iuQM3l0.jpeg", // Foto 2 (Corregido a i.imgur.com)
+      "https://i.imgur.com/Ifruvs3.jpeg"  // Foto 3
+    ];
+
+    function setPhoto(index) {
+      document.getElementById('polaroid-img').src = photos[index];
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    // Desplegar carta
+    const openBtn = document.getElementById('open-btn');
+    const letter = document.getElementById('letter');
+
+    openBtn.addEventListener('click', () => {
+      if (letter.style.display === 'block') {
+        letter.style.display = 'none';
+        openBtn.textContent = 'Descúbrelo';
+      } else {
+        letter.style.display = 'block';
+        openBtn.textContent = 'Cerrar';
+      }
+    });
+  </script>
+</body>
+</html>
