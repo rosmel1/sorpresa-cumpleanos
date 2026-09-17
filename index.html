@@ -11,6 +11,7 @@
       --primary: #c25959;
       --text: #4a3e3d;
       --accent: #d98a6c;
+      --gold: #d4a359;
     }
 
     * {
@@ -26,71 +27,101 @@
       display: flex;
       justify-content: center;
       padding: 20px;
+      overflow-x: hidden;
     }
 
     .container {
       width: 100%;
       max-width: 400px;
       background-color: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-      padding: 24px 16px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      padding: 28px 18px;
       text-align: center;
       min-height: 90vh;
       display: flex;
       flex-direction: column;
       align-content: center;
-      position: relative; /* Necesario para ubicar el botón de música */
+      position: relative;
+      border: 1px solid #f0e6dd;
     }
 
-    /* BOTÓN DE CONTROL DE MÚSICA */
-    .music-control {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1rem;
-      color: var(--primary);
-      z-index: 10;
+    /* ADORNOS DE LA PANTALLA DE INICIO */
+    .party-banner {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .birthday-subtitle {
+      font-family: 'Georgia', serif;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-top: 4px;
+      margin-bottom: 16px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .decorative-sparkles {
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-bottom: 20px;
     }
 
     /* PANTALLA 1: CORAZÓN Y CARGA */
     #interactive-screen {
       margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .name-title {
       font-size: 1.8rem;
       font-style: italic;
-      margin-bottom: 20px;
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      color: #776e6b;
-      margin-bottom: 30px;
-      min-height: 24px;
-    }
-
-    .heart-btn {
-      font-size: 3rem;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.1s ease;
-      display: inline-block;
       color: var(--primary);
     }
 
+    .subtitle {
+      font-size: 0.95rem;
+      color: #776e6b;
+      margin-bottom: 25px;
+      min-height: 24px;
+    }
+
+    /* BOTÓN CORAZÓN ANIMADO */
+    .heart-container {
+      position: relative;
+      display: inline-block;
+      margin: 10px 0;
+    }
+
+    .heart-btn {
+      font-size: 3.8rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease;
+      display: inline-block;
+      color: var(--primary);
+      animation: pulse 1.5s infinite;
+    }
+
     .heart-btn:active {
-      transform: scale(1.3);
+      transform: scale(1.3) !important;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
     .progress-bar-container {
@@ -98,7 +129,7 @@
       height: 10px;
       background-color: #e6ded8;
       border-radius: 10px;
-      margin: 30px auto 10px auto;
+      margin: 25px auto 10px auto;
       overflow: hidden;
     }
 
@@ -136,7 +167,7 @@
     /* POLAROID STYLES */
     .polaroid-card {
       background: #ffffff;
-      padding: 12px 12px 24px 12px;
+      padding: 12px 12px 16px 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       border: 1px solid #efe8e1;
       border-radius: 2px;
@@ -144,35 +175,58 @@
 
     .polaroid-img {
       width: 100%;
-      height: 280px;
+      height: 380px;
       object-fit: cover;
       border-radius: 2px;
     }
 
-    .polaroid-dots {
+    .year-label {
+      font-size: 0.9rem;
       margin-top: 10px;
+      font-style: italic;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .quote-label {
+      font-size: 0.9rem;
+      margin-top: 6px;
+      color: var(--text);
+      line-height: 1.4;
+      min-height: 40px;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 8px;
+      padding: 0 5px;
     }
 
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background-color: #ccc;
+    .polaroid-nav {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background-color: var(--card-bg);
+      border: 1px solid var(--accent);
+      color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 15px;
       cursor: pointer;
+      font-size: 0.85rem;
     }
 
-    .dot.active {
-      background-color: var(--primary);
+    .counter-badge {
+      font-size: 0.8rem;
+      color: #887d7a;
     }
 
     /* ENVOLTORIO / CARTA */
     .envelope-box {
       background-color: #f2e3d5;
       border: 1px dashed var(--accent);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 15px;
       margin-top: 10px;
     }
@@ -181,28 +235,87 @@
       background-color: var(--primary);
       color: white;
       border: none;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 20px;
       cursor: pointer;
       font-size: 0.9rem;
       margin-bottom: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-open:hover {
+      background-color: #a84848;
     }
 
     .letter-content {
       display: none;
-      text-align: left;
+      text-align: justify;
       font-size: 0.95rem;
-      line-height: 1.6;
+      line-height: 1.7;
       margin-top: 15px;
-      background: white;
-      padding: 15px;
-      border-radius: 6px;
+      background: #ffffff;
+      padding: 22px 18px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      border: 1px solid #f2eae1;
+    }
+
+    .letter-content p {
+      margin-bottom: 14px;
+      text-justify: inter-word;
+    }
+
+    .letter-highlight {
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .letter-center {
+      text-align: center !important;
+    }
+
+    .letter-love-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 18px 0 10px 0;
+      letter-spacing: 1px;
     }
 
     .final-photo {
       width: 100%;
       border-radius: 8px;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    /* SECCIÓN NUEVA: ÁLBUM DE NUESTRAS FOTOS */
+    .gallery-box {
+      background-color: #f7ebe1;
+      border: 1px solid #e8d5c8;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .gallery-content {
+      display: none;
       margin-top: 15px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .grid-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
   </style>
 </head>
@@ -210,20 +323,25 @@
 
   <div class="container">
     
-    <!-- BOTÓN Y ETIQUETA DE AUDIO PARA LA MÚSICA -->
-    <button id="music-btn" class="music-control">🎵</button>
+    <!-- ETIQUETA DE AUDIO EN SEGUNDO PLANO -->
     <audio id="bg-music" loop>
-      <!-- Reemplaza "musica.mp3" con la ruta o enlace de tu archivo de audio -->
       <source src="No hay nadie más.mp3.mp3" type="audio/mpeg">
       Tu navegador no soporta el audio.
     </audio>
 
-    <!-- ETAPA 1: CORAZÓN INTERACTIVO -->
+    <!-- ETAPA 1: CORAZÓN INTERACTIVO Y ADORNOS DE INICIO -->
     <div id="interactive-screen">
+      <div class="party-banner">🎈 ✨ 🎂 ✨ 🎈</div>
       <h1 class="name-title">Ruth Mery Arce Flores</h1>
-      <p id="phrase" class="subtitle">Toca el corazón</p>
+      <p class="birthday-subtitle">¡Feliz cumpleaños, mi niña! ♥</p>
       
-      <div id="heart-btn" class="heart-btn">♥</div>
+      <div class="decorative-sparkles">✦   ✦   ✦</div>
+      
+      <p id="phrase" class="subtitle">Toca el corazón para empezar</p>
+      
+      <div class="heart-container">
+        <div id="heart-btn" class="heart-btn">♥</div>
+      </div>
 
       <div class="progress-bar-container">
         <div id="progress-bar" class="progress-bar"></div>
@@ -234,17 +352,20 @@
     <!-- ETAPA 2: SORPRESA COMPLETA -->
     <div id="main-screen">
       <div class="header-text">
-        <h2>Hoy es el cumpleaños de mi persona favorita</h2>
+        <h2>Hoy es el cumpleaños de mi persona favorita ♥✦</h2>
         <span class="date-badge">23 de Setiembre</span>
       </div>
 
-      <!-- Galería Polaroid -->
+      <!-- Galería Polaroid (21 Años) -->
       <div class="polaroid-card">
-        <img id="polaroid-img" class="polaroid-img" src="https://i.imgur.com/5Buw0NZ.jpeg" alt="Foto juntos">
-        <div class="polaroid-dots">
-          <span class="dot active" onclick="setPhoto(0)"></span>
-          <span class="dot" onclick="setPhoto(1)"></span>
-          <span class="dot" onclick="setPhoto(2)"></span>
+        <img id="polaroid-img" class="polaroid-img" src="" alt="Foto">
+        <p id="year-label" class="year-label">Año 1</p>
+        <p id="quote-label" class="quote-label">Cualidad...</p>
+        
+        <div class="polaroid-nav">
+          <button class="nav-btn" onclick="prevPhoto()">❮ Anterior</button>
+          <span id="counter-badge" class="counter-badge">1 / 21</span>
+          <button class="nav-btn" onclick="nextPhoto()">Siguiente ❯</button>
         </div>
       </div>
 
@@ -255,43 +376,62 @@
 
         <div id="letter" class="letter-content">
           <p>Hay personas que llegan y lo cambian todo. Pienso que ni el destino escribiendo la mejor de las historias habría creado a alguien tan especial como tú.</p>
-          <br>
-          <p>Hoy celebro tu risa, tu luz y tu forma de hacerme sentir en casa. Que la vida te siga mostrando que no hay nada más especial que TÚ.</p>
-          <br>
-          <p><i>Cada año tuyo es un capítulo nuevo, y pienso estar en todos. 🥂</i></p>
-          <br>
+          
+          <p>Hace 21 años, un 23 de septiembre, llegó a este mundo la personita que pronto se convertiría en lo más especial e importante de mi vida: mi novia ❤️, la mujer que le da todo el brillo a mi camino.</p>
+
+          <p>Sé que la vida no siempre te lo ha puesto fácil, mi niña, y que has tenido que ser muy fuerte en momentos complicados. A pesar de todo lo que viviste, has demostrado ser una mujer resiliente que siempre le encuentra el lado positivo a las cosas. Admiro enormemente en la mujer increíble en la que te has convertido. Amo todo de ti: lo ridículamente linda que eres, tu lado sensible de corazón gigante, e incluso ese carácter enojón tan tuyo que me saca sonrisas todos los días.</p>
+
+          <p>Gracias por confiarme tu corazón y por dejarme cuidar de tu paz. Mi único deseo para tus 21 años, y que siempre le pido a Dios, es que la vida te regale tanta felicidad como la que tú me das a mí. Recuerda siempre que aquí estoy para abrazarte fuerte, mimarte y caminar a tu lado en las buenas y en las malas, mi amor ❤️.</p>
+
+          <p class="letter-center letter-highlight">¡Feliz cumpleaños, mi niña hermosa! ✨🎂</p>
+
+          <p class="letter-center">Hoy celebro tu risa, tu luz y tu forma de hacerme sentir en casa. Que la vida te siga mostrando que no hay nada más especial que TÚ.</p>
+
+          <p class="letter-center"><i>"Y recuerda: eres mi novia, mi mujer, mi niña, mi mejor amiga y mi vida entera." ✨❤️</i></p>
+
+          <div class="letter-love-title">¡TE AMOOOO MUCHO! ❤️</div>
+
+          <p class="letter-center">Gracias por existir, por ser mi lugar seguro y por compartir tu vida conmigo.</p>
+
+          <p class="letter-center" style="font-style: italic; color: var(--accent); margin-top: 15px;">Cada año tuyo es un capítulo nuevo, y pienso estar en todos. 🥂</p>
+
           <img class="final-photo" src="https://i.imgur.com/GpnNDxO.jpeg" alt="Foto final">
-          <p style="text-align: center; margin-top: 10px; font-weight: bold;">Gracias por compartir tu vida conmigo ♥</p>
+          <p class="letter-center" style="margin-top: 12px; font-weight: bold; font-size: 0.85rem;">Siempre juntos ♥</p>
         </div>
       </div>
+
+      <!-- SECCIÓN NUEVA: NUESTRAS FOTOS -->
+      <div class="gallery-box">
+        <button id="open-gallery-btn" class="btn-open" style="background-color: var(--accent);">Nuestras fotos 📸</button>
+        <p style="font-size: 0.8rem; color: #776e6b;">Más momentos juntos</p>
+
+        <div id="gallery" class="gallery-content">
+          <div class="photo-grid">
+            <!-- REEMPLAZA ESTOS ENLACES CON TUS FOTOS DE EN PAREJA -->
+            <img class="grid-img" src="https://i.imgur.com/GpnNDxO.jpeg" alt="Momento 1">
+            <img class="grid-img" src="https://i.imgur.com/kw2yCQF.jpeg" alt="Momento 2">
+            <img class="grid-img" src="https://i.imgur.com/iuQM3l0.jpeg" alt="Momento 3">
+            <img class="grid-img" src="https://i.imgur.com/5Buw0NZ.jpeg" alt="Momento 4">
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
 
   <script>
-    // Control de audio
     const bgMusic = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-btn');
     let musicStarted = false;
-
-    musicBtn.addEventListener('click', () => {
-      if (bgMusic.paused) {
-        bgMusic.play();
-        musicBtn.textContent = '🎵';
-      } else {
-        bgMusic.pause();
-        musicBtn.textContent = '🔇';
-      }
-    });
 
     // Configuración del botón interactivo
     const phrases = [
-      "Toca el corazón",
-      "Otra vez",
-      "Algo se está encendiendo...",
-      "Sigue, que esto se calienta",
-      "Un poquito más",
-      "No pares ahora"
+      "Toca el corazón para empezar",
+      "Otra vez ♥",
+      "Algo se está preparando...",
+      "Sigue tocando, mi niña",
+      "Ya casi casi...",
+      "¡Un último toque!"
     ];
 
     let step = 0;
@@ -305,7 +445,7 @@
     const mainScreen = document.getElementById('main-screen');
 
     heartBtn.addEventListener('click', () => {
-      // Inicia la música automáticamente en el primer clic
+      // Inicia la música automáticamente al dar el primer toque
       if (!musicStarted) {
         bgMusic.play().catch(e => console.log("Audio pausado por el navegador:", e));
         musicStarted = true;
@@ -327,20 +467,60 @@
       }
     });
 
-    // Configuración de Fotos Polaroid
-    const photos = [
-      "https://i.imgur.com/5Buw0NZ.jpeg", // Foto 1
-      "https://i.imgur.com/iuQM3l0.jpeg", // Foto 2 (Corregido a i.imgur.com)
-      "https://i.imgur.com/Ifruvs3.jpeg"  // Foto 3
+    // LISTA DE 21 FOTOS CON SUS FRASES / CUALIDADES
+    const photosData = [
+      { url: "https://i.imgur.com/iAJd5IU.jpeg", text: "Tu sonrisa iluminó el mundo desde el primer día." },
+      { url: "https://i.imgur.com/SfcNcfm.jpeg", text: "Tu dulzura hace que todo a tu alrededor sea especial." },
+      { url: "https://i.imgur.com/RzcqOJg.jpeg", text: "Esa alegría contagiosa que alegra cualquier momento." },
+      { url: "https://i.imgur.com/ENp7i5t.jpeg", text: "Tu curiosidad e inteligencia para descubrir el mundo." },
+      { url: "https://i.imgur.com/odnHLD0.jpeg", text: "La ternura única con la que tratas a quienes amas." },
+      { url: "https://i.imgur.com/kOkZr0G.jpeg", text: "Tu energía bonita que transmite paz y felicidad." },
+      { url: "https://i.imgur.com/ELhMaiG.jpeg", text: "Esa bondad genuina que vive en tu corazón." },
+      { url: "https://i.imgur.com/5oMe99g.jpeg", text: "Tu creatividad para ver magia donde otros no ven nada." },
+      { url: "https://i.imgur.com/1br5Qsp.jpeg", text: "La fuerza silenciosa con la que superas cada reto." },
+      { url: "https://i.imgur.com/NHgvssA.jpeg", text: "Tu empatía única para entender a los demás." },
+      { url: "https://i.imgur.com/tGVSZ1N.jpeg", text: "Esa chispa especial que te hace inolvidable." },
+      { url: "https://i.imgur.com/rSEunGF.jpeg", text: "Tu perseverancia para lograr todo lo que te propones." },
+      { url: "https://i.imgur.com/wZtGfq0.jpeg", text: "La autenticidad que te hace ser libre y tú misma." },
+      { url: "https://i.imgur.com/JmoTEaj.jpeg", text: "Tu capacidad de hacer reír hasta en los días grises." },
+      { url: "https://i.imgur.com/Ifruvs3.jpeg", text: "Esa mirada llena de sueños y grandes metas." },
+      { url: "https://i.imgur.com/OFsa0aN.jpeg", text: "Tu paciencia y comprensión infinita." },
+      { url: "https://i.imgur.com/pfl0cBE.jpeg", text: "La valentía de crecer y seguir siempre adelante." },
+      { url: "https://i.imgur.com/DuQ7yBP.jpeg", text: "Tu elegancia y luz propia que encandila." },
+      { url: "https://i.imgur.com/5Buw0NZ.jpeg", text: "El gran corazón que tienes para dar amor incondicional." },
+      { url: "https://i.imgur.com/iuQM3l0.jpeg", text: "Tu madurez y la sabiduría con la que tomas decisiones." },
+      { url: "https://i.imgur.com/kw2yCQF.jpeg", text: "Llegaste a los 21 siendo la versión más increíble de ti." }
     ];
 
-    function setPhoto(index) {
-      document.getElementById('polaroid-img').src = photos[index];
-      const dots = document.querySelectorAll('.dot');
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
+    let currentPhotoIndex = 0;
+
+    function updatePhoto() {
+      const current = photosData[currentPhotoIndex];
+      document.getElementById('polaroid-img').src = current.url;
+      document.getElementById('year-label').textContent = `Año ${currentPhotoIndex + 1}`;
+      document.getElementById('quote-label').textContent = `"${current.text}"`;
+      document.getElementById('counter-badge').textContent = `${currentPhotoIndex + 1} / ${photosData.length}`;
     }
+
+    function nextPhoto() {
+      if (currentPhotoIndex < photosData.length - 1) {
+        currentPhotoIndex++;
+      } else {
+        currentPhotoIndex = 0;
+      }
+      updatePhoto();
+    }
+
+    function prevPhoto() {
+      if (currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+      } else {
+        currentPhotoIndex = photosData.length - 1;
+      }
+      updatePhoto();
+    }
+
+    updatePhoto();
 
     // Desplegar carta
     const openBtn = document.getElementById('open-btn');
@@ -353,6 +533,20 @@
       } else {
         letter.style.display = 'block';
         openBtn.textContent = 'Cerrar';
+      }
+    });
+
+    // Desplegar galería de "Nuestras Fotos"
+    const openGalleryBtn = document.getElementById('open-gallery-btn');
+    const gallery = document.getElementById('gallery');
+
+    openGalleryBtn.addEventListener('click', () => {
+      if (gallery.style.display === 'block') {
+        gallery.style.display = 'none';
+        openGalleryBtn.textContent = 'Nuestras fotos 📸';
+      } else {
+        gallery.style.display = 'block';
+        openGalleryBtn.textContent = 'Cerrar álbum';
       }
     });
   </script>
